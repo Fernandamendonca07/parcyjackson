@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        @font-face {
+            font-family: pj2;
+            src: url(marathon/Marav2.ttf);
+        }
+        @font-face {
+            font-family: pj;
+            src: url(greek_freak/Greek-Freak.ttf);
+        }
+
+        * {
+            margin: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url(https://lumiere-a.akamaihd.net/v1/images/image003_817fa960.jpeg?region=0,660,1280,719&width=960);
+            background-size: cover;
+            background-repeat: no-repeat;
+            backdrop-filter: blur(1px);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        h1 {
+            padding: 10%;
+            font-family: pj;
+            color: #5599f1;
+            font-size: 60px;
+            
+        }
+
+        .quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #pergunta {
+            font-size: 40px;
+            margin-bottom: 20px;
+            font-family: pj2;
+            color: #6fa3e7;
+        }
+
+        #opcoes {
+       display: flex;
+       flex-direction: column;
+      
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            color: rgb(20, 144, 245);
+        }
+
+        .correto {
+            background-color: #88c34a;
+        }
+
+        .incorreto {
+            background-color: #ff5722;
+        }
+
+        footer{
+            color: #3b81dd;
+            font-family: pj2;
+            font-size: 30px;
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quiz-container">
+        <h1>Quiz de Parcy Jackson</h1>
+        <div id="pergunta"></div>
+        <div id="opcoes"></div>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        const perguntas = [
+            {
+                pergunta: "Quem é o pai de Parcy Jackson?",
+                opcoes: ["Zeus", "Atena", "Poseidon", "Afrodite"],
+                resposta: "Poseidon"
+            },
+            {
+                pergunta: "Qual o autar de Parcy Jackson?",
+                opcoes: ["JK Rowling ", "Rick Riordan", "William Shakespeare", "Colleen Hoover"],
+                resposta: "Rick Riordan"
+            },
+            {
+                pergunta: "Quantos Livros de Parcy Jackson existi? ",
+                opcoes: ["9", "6", "7", "5"],
+                resposta: "5"
+            },
+            {
+                pergunta: "Quem é o maior inimigo de Parcy?",
+                opcoes: ["Cronos", "Zeus", "Luke Castellan", "Atena"],
+                resposta: "Cronos",
+
+            },
+            {
+                pergunta: "Qual o objeto mitológico roubam de Zeus?",
+                opcoes: ["Escudo Aegis", "Velocino de ouro", "Raio-Mestre"],
+            },
+
+            //adicionar mais perguntas...
+        ];
+
+        const perguntaElemento = document.getElementById("pergunta");
+        const opcoesElemento = document.getElementById("opcoes");
+        const resultadoElemento = document.getElementById("resultado");
+
+        let indicePerguntaAtual = 0;
+
+        function carregarPergunta() {
+            const perguntaAtual = perguntas[indicePerguntaAtual];
+            perguntaElemento.textContent = perguntaAtual.pergunta;
+
+            opcoesElemento.innerHTML = "";
+            perguntaAtual.opcoes.forEach(opcao => {
+                const botao = document.createElement("button");
+                botao.textContent = opcao;
+                botao.addEventListener("click", () => verificarResposta(opcao));
+                opcoesElemento.appendChild(botao);
+            });
+        }
+
+        function verificarResposta(respostaSelecionada) {
+            const perguntaAtual = perguntas[indicePerguntaAtual];
+            if (respostaSelecionada === perguntaAtual.resposta) {
+                resultadoElemento.textContent = "Resposta correta!";
+                resultadoElemento.className = "correto";
+            } else {
+                resultadoElemento.textContent = "Resposta incorreta. A resposta correta é:" + perguntaAtual.resposta;
+                resultadoElemento.className = "incorreto";
+            }
+            //Avança para a próxima pergunta ou  finalizar o quiz
+            indicePerguntaAtual++;
+            if (indicePerguntaAtual < perguntas.length) {
+                setTimeout(carregarPergunta, 2000); //carregar a próxima pergunta após 2 segundos
+            } else {
+                resultadoElemento.textContent = "Quiz concluído!";
+                resultadoElemento.className = "";
+            }
+        }
+        //carregar a primeira pergunta quando  a página carregar
+        carregarPergunta();
+    </script>
+<footer>Desenvolvido por Fernanda Mendonça |Março 2024</footer>
+
+</body>
+
+</html>
